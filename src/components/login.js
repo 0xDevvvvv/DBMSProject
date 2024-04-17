@@ -1,16 +1,8 @@
 import React from "react";
+import "../assets/css/login.css"
 
 function LoginForm(){
-    return(<div><!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <link href="login2.CSS" rel="stylesheet" type="text/CSS" />
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Library Management System</title>
-        </head>
-        <body>
+    return(
             <div class="main">
                 <div class="box">
                     <div class="title">
@@ -34,7 +26,6 @@ function LoginForm(){
                 </div>
                 
             </div>
-        </body>
-        </html></div>);
+    );
 }
 export default LoginForm;
