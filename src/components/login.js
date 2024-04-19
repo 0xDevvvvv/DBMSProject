@@ -1,28 +1,45 @@
 import React from "react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-
+import{getDocs,query,where,collection} from "firebase/firestore";
+import {db} from "../config/firebase";
 
 import { useAuth } from "../context/AuthContext";
 
-
-
 import "../assets/css/login.css"
 
+const LibraryUsersRef = collection(db,"LibraryUsers"); 
 
 function LoginForm(){
+
+    const myStyle = {
+        backgroundImage:
+            "url('https://wallpapercave.com/wp/wp9764009.jpg')",
+        height: "100vh",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+    };
 
     const navigate = useNavigate();
     const dashboardNavigate = () => {
         navigate("/dashboard");
     }
-
+    
+    const [username,setUsername] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const { login }  = useAuth();
 
     async function LoginUser(e){
         e.preventDefault();
+
+        const q = query(LibraryUsersRef,where("LibUsername","==",username));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc)=>{
+            setEmail(doc.data().LibEmail);
+        })
+
         try{
 
             await login(email,password);
@@ -30,13 +47,14 @@ function LoginForm(){
         }
         catch(err)
         {
-            console.log(err);
+            alert(err)
         }
     }
 
     return(
-        <body>
-            <div class="main">
+        <div class="bg-image" style={myStyle}>
+            <div class="main" >
+        
                 <div class="box">
                     <div class="title">
                         <h1>Library Management System</h1>
@@ -46,7 +64,7 @@ function LoginForm(){
                       
                         <form>
                             <div class="inputc">
-                                <input type="text" placeholder="Username" onChange={(e)=>{setEmail(e.target.value)}} required />
+                                <input type="text" placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}} required />
                             </div>
                             <div class="inputc">
                                 <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}required />
@@ -57,8 +75,9 @@ function LoginForm(){
                         
                     </div>
                 </div>
+                
             </div>
-    </body>
+    </div>
     );
 }
 export default LoginForm;
