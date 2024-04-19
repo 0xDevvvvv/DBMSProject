@@ -8,6 +8,10 @@
   
 }
 
+body{
+    display: flex;
+}
+
 .sidebar{
     position: sticky;
     top: 0;
@@ -80,7 +84,7 @@
 }
 
 
-.main-dashboard{
+.main{
     position: relative;
     background: #ebe9e9;
     width: 100%;
@@ -88,7 +92,7 @@
 
 }
 
-.main-header{
+.header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,20 +103,20 @@
     margin-bottom: 1rem;
 }
 
-.main-title{
+.title{
     color: rgba(133,99,186,255);
 }
 
-.main-title h2{
+.title h2{
     padding: 5px;
 }
 
-.db-search{
+.search{
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.db-searchbox{
+.searchbox{
     background: rgb(237, 237, 237);
     border-radius: 15px;
     color: rgba(133,99,186,255);
@@ -122,13 +126,13 @@
     padding :4px 12px;
 }
 
-.db-searchbox input{
+.searchbox input{
     border: none;
     background:transparent;
     padding: 10px;
 }
 
-.db-searchbox i{
+.searchbox i{
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.5s ease-out;

@@ -47,7 +47,7 @@ function LoginForm(){
         }
         catch(err)
         {
-            alert(err)
+            alert("Invalid Email or password");
         }
     }
 
