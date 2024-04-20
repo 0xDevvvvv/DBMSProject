@@ -2,13 +2,12 @@ import React from "react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import{getDocs,query,where,collection} from "firebase/firestore";
-import {db} from "../config/firebase";
+import { LibraryUsersRef } from "../context/DBContext";
 
 import { useAuth } from "../context/AuthContext";
 
 import "../assets/css/login.css"
 
-const LibraryUsersRef = collection(db,"LibraryUsers"); 
 
 function LoginForm(){
 
@@ -54,7 +53,6 @@ function LoginForm(){
     return(
         <div class="bg-image" style={myStyle}>
             <div class="main" >
-        
                 <div class="box">
                     <div class="title">
                         <h1>Library Management System</h1>
@@ -75,7 +73,6 @@ function LoginForm(){
                         
                     </div>
                 </div>
-                
             </div>
     </div>
     );
