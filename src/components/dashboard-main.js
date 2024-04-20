@@ -1,21 +1,47 @@
 import "../assets/css/dashboard.css";
 
-import { doc, getDoc } from "firebase/firestore";
+import { query,where,getDocs, orderBy,limit } from "firebase/firestore";
 import { useState,useEffect } from "react";
-import { TotalRef } from "../context/DBContext";
+import { BookRef,UsersRef,TransactionRef } from "../context/DBContext";
+import { getCountFromServer } from "firebase/firestore";
 
 export default function DashboardMain(){
-    const [TotalDetailsData,setTotalDetailsData ] = useState([]);
-    const fetchTotal = async () =>{
+    
+    const [count,setCount ] = useState([]);
+    const [transactionDetails, setTransactinDetails] = useState([]);
+
+    const fetchRecentTrnsnDetails = async () =>{
         try{
-            const data = await getDoc(TotalRef)
-            setTotalDetailsData([data.data().Books,data.data().Users,data.data().Transactions,data.data().Returns]);
+            const trnsndetails = await getDocs(query(TransactionRef,orderBy('Date','asc'),limit(5)));
+            const filtereddata = trnsndetails.docs.map((doc)=>({
+                ...doc.data(),
+                id:doc.id,
+            }));
+            setTransactinDetails(filtereddata);
+        }catch(err){
+            console.log(err);
+        }
+
+    }
+
+    const fetchCountDetails = async () =>{
+        try{
+            
+            const bookCount = await getCountFromServer(BookRef);
+            const userCount = await getCountFromServer(UsersRef);
+            const transactionCount = await getCountFromServer(TransactionRef);
+            const returnQuery = query(TransactionRef,where("Type","==","return"));
+            const returnCount = await getCountFromServer(returnQuery);
+            setCount([bookCount.data().count,userCount.data().count,transactionCount.data().count,returnCount.data().count]);
+
+
         }catch(err){
             console.log(err);
         }
     }
     useEffect(()=>{
-        fetchTotal();
+        fetchCountDetails();
+        fetchRecentTrnsnDetails();
     },[])
 
     return(
@@ -46,7 +72,7 @@ export default function DashboardMain(){
                                 <span class="btitle">
                                     Total Books
                                 </span>
-                                <span class="bvalue">{TotalDetailsData[0]}</span>
+                                <span class="bvalue">{count[0]}</span>
                             </div>
                             {/*icon*/}
                             <i class='bx bxs-book'></i>
@@ -62,7 +88,7 @@ export default function DashboardMain(){
                                 <span class="btitle">
                                     Total Users
                                 </span>
-                                <span class="bvalue">{TotalDetailsData[1]}</span>
+                                <span class="bvalue">{count[1]}</span>
                             </div>
                             {/*icon*/}
                             <i class='bx bxs-user'></i>
@@ -78,7 +104,7 @@ export default function DashboardMain(){
                                 <span class="btitle">
                                     Total Transactions
                                 </span>
-                                <span class="bvalue">{TotalDetailsData[2]}</span>
+                                <span class="bvalue">{count[2]}</span>
                             </div>
                             {/*icon*/}
                             <i class='bx bxs-book'></i>
@@ -93,7 +119,7 @@ export default function DashboardMain(){
                                 <span class="btitle">
                                     Details
                                 </span>
-                                <span class="bvalue">{TotalDetailsData[3]}</span>
+                                <span class="bvalue">{count[3]}</span>
                             </div>
                             <i class='bx bxs-book'></i>
                         </div>
@@ -115,16 +141,21 @@ export default function DashboardMain(){
                             </tr>
                         </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>dev</td>
-                                    <td>jungle book</td>
-                                    <td>2</td>
-                                    <td>19-04-2024</td>
-                                    <td>2-05-2024</td>
-                                </tr>
+                                {transactionDetails.map((doc)=>{
+                                    return(
+                                        <tr>
+                                            <td>{doc.UserID}</td>
+                                            <td>dev</td>
+                                            <td>{doc.Type}</td>
+                                            <td>{doc.BookID}</td>
+                                            <td>19-04-2024</td>
+                                            <td>2-05-2024</td>
+                                        </tr>
 
-                                <tr>
+                                    )
+                                })                                }
+
+                                {/*<tr>
                                     <td>1</td>
                                     <td>nadana</td>
                                     <td>jungle book</td>
@@ -149,7 +180,7 @@ export default function DashboardMain(){
                                     <td>2</td>
                                     <td>19-04-2024</td>
                                     <td>2-05-2024</td>
-                                </tr>
+                                </tr>*/}
                             </tbody>
                             <tfoot>
                                 <tr>
