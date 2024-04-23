@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-import{getDocs,query,where,collection} from "firebase/firestore";
+import{getDocs,query,where,limit,orderBy} from "firebase/firestore";
 import { LibraryUsersRef } from "../context/DBContext";
 
 import { useAuth } from "../context/AuthContext";
@@ -29,14 +29,15 @@ function LoginForm(){
     const [password,setPassword] = useState("");
     const { login }  = useAuth();
 
-    async function LoginUser(e){
+    const LoginUser = async (e)=>{
         e.preventDefault();
-
-        const q = query(LibraryUsersRef,where("LibUsername","==",username));
+        const q = query(LibraryUsersRef,where("LibUsername","==",username),limit(1),orderBy("LibUsername","asc"));
         const querySnapshot = await getDocs(q);
 
+        
         querySnapshot.forEach((doc)=>{
-            setEmail(doc.data().LibEmail);
+
+            setEmail(doc.data().LibEmail.toString());
         })
 
         try{
@@ -44,9 +45,8 @@ function LoginForm(){
             await login(email,password);
             dashboardNavigate();
         }
-        catch(err)
-        {
-            alert("Invalid Email or password");
+        catch(err){
+            return(<div>Incorrect Details</div>)
         }
     }
 
@@ -67,8 +67,8 @@ function LoginForm(){
                             <div class="inputc">
                                 <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}required />
                             </div>
-                            <a href="#" class="forget">Forget password</a>
-                            <button type="submit" onClick={LoginUser}>Log In</button>
+                            <a href="/forgot-password" class="forget">Forgot password</a>
+                            <button  onClick={LoginUser}>Log In</button>
                         </form>
                         
                     </div>

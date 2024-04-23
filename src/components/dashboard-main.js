@@ -1,6 +1,9 @@
 import "../assets/css/dashboard.css";
 
-import { query,where,getDocs, orderBy,limit } from "firebase/firestore";
+import ReturnRecentUser from "./recentUserTrnsn";
+import ReturnRecentBook from "./recentBookTrnsn";
+
+import { query,where,getDocs, getDoc,orderBy,limit } from "firebase/firestore";
 import { useState,useEffect } from "react";
 import { BookRef,UsersRef,TransactionRef } from "../context/DBContext";
 import { getCountFromServer } from "firebase/firestore";
@@ -8,22 +11,27 @@ import { getCountFromServer } from "firebase/firestore";
 export default function DashboardMain(){
     
     const [count,setCount ] = useState([]);
-    const [transactionDetails, setTransactinDetails] = useState([]);
+    const [transactionDetails, setTransactionDetails] = useState([]);
 
+    const clearStates = () =>{
+        setTransactionDetails([])
+    }
+    
     const fetchRecentTrnsnDetails = async () =>{
+        
         try{
-            const trnsndetails = await getDocs(query(TransactionRef,orderBy('Date','asc'),limit(5)));
-            const filtereddata = trnsndetails.docs.map((doc)=>({
-                ...doc.data(),
-                id:doc.id,
-            }));
-            setTransactinDetails(filtereddata);
+            const trnsndetails = await getDocs(query(TransactionRef,orderBy('Date','desc'),limit(5)));
+            clearStates();
+            {trnsndetails.forEach((doc)=>{
+                setTransactionDetails((olddata)=>[...olddata,doc.data()])
+                
+            })}
+            
         }catch(err){
             console.log(err);
         }
 
     }
-
     const fetchCountDetails = async () =>{
         try{
             
@@ -39,9 +47,11 @@ export default function DashboardMain(){
             console.log(err);
         }
     }
+    
     useEffect(()=>{
         fetchCountDetails();
-        fetchRecentTrnsnDetails();
+        fetchRecentTrnsnDetails();   
+        
     },[])
 
     return(
@@ -137,50 +147,26 @@ export default function DashboardMain(){
                                 <th>Book Name</th>
                                 <th>Book ID</th>
                                 <th>Date</th>
-                                <th>Return Date</th> 
+                                <th>Type</th> 
                             </tr>
                         </thead>
                             <tbody>
-                                {transactionDetails.map((doc)=>{
-                                    return(
+                                
+                                {transactionDetails.map((d)=>{
+                                        return(
                                         <tr>
-                                            <td>{doc.UserID}</td>
-                                            <td>dev</td>
-                                            <td>{doc.Type}</td>
-                                            <td>{doc.BookID}</td>
-                                            <td>19-04-2024</td>
-                                            <td>2-05-2024</td>
+                                            <td>{d.UserID}</td>
+                                            <ReturnRecentUser UserID={d.UserID}/>
+                                            <ReturnRecentBook BookID={d.BookID}/>
+                                            <td>{d.BookID}</td>
+                                            <td>{d.Date&&d.Date.toDate()&&d.Date.toDate().toString()}</td>
+                                            <td>{d.Type}</td>
                                         </tr>
-
                                     )
-                                })                                }
-
-                                {/*<tr>
-                                    <td>1</td>
-                                    <td>nadana</td>
-                                    <td>jungle book</td>
-                                    <td>2</td>
-                                    <td>19-04-2024</td>
-                                    <td>2-05-2024</td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td>adwaid</td>
-                                    <td>jungle book</td>
-                                    <td>2</td>
-                                    <td>19-04-2024</td>
-                                    <td>2-05-2024</td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td>dhil</td>
-                                    <td>jungle book</td>
-                                    <td>2</td>
-                                    <td>19-04-2024</td>
-                                    <td>2-05-2024</td>
-                                </tr>*/}
+                                    })}
+                                        {/*<tr>
+                                            
+                                        </tr>*/}
                             </tbody>
                             <tfoot>
                                 <tr>
