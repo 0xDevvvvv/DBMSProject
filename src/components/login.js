@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-import{getDocs,query,where,limit,orderBy} from "firebase/firestore";
+import{getDocs,query,where,limit,orderBy,getCountFromServer} from "firebase/firestore";
 import { LibraryUsersRef } from "../context/DBContext";
 
 import { useAuth } from "../context/AuthContext";
@@ -32,18 +32,27 @@ function LoginForm(){
     const LoginUser = async (e)=>{
         e.preventDefault();
         const q = query(LibraryUsersRef,where("LibUsername","==",username),limit(1),orderBy("LibUsername","asc"));
-        const querySnapshot = await getDocs(q);
-
-        
-        querySnapshot.forEach((doc)=>{
-
-            setEmail(doc.data().LibEmail.toString());
-        })
+        const count = await getCountFromServer(q);
 
         try{
+            
+            if(count.data().count == 0){
+                alert("Wrong Email/Password")
+            }
+            else{
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc)=>{
 
-            await login(email,password);
-            dashboardNavigate();
+                    setEmail(doc.data().LibEmail)
+                    login(email,password).then(()=>{
+                        dashboardNavigate();
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                })
+                
+                
+            }
         }
         catch(err){
             return(<div>Incorrect Details</div>)
@@ -68,7 +77,7 @@ function LoginForm(){
                                 <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}required />
                             </div>
                             <a href="/forgot-password" class="forget">Forgot password</a>
-                            <button  onClick={LoginUser}>Log In</button>
+                            <button  onClick={LoginUser} >Log In</button>
                         </form>
                         
                     </div>

@@ -3,13 +3,16 @@ import "../assets/css/dashboard.css";
 import ReturnRecentUser from "./recentUserTrnsn";
 import ReturnRecentBook from "./recentBookTrnsn";
 
-import { query,where,getDocs, getDoc,orderBy,limit } from "firebase/firestore";
-import { useState,useEffect } from "react";
 import { BookRef,UsersRef,TransactionRef } from "../context/DBContext";
+
+
+import { query,where,getDocs,orderBy,limit } from "firebase/firestore";
+import { useState,useEffect, useContext } from "react";
 import { getCountFromServer } from "firebase/firestore";
+import { SectionContext } from "../context/context";
 
 export default function DashboardMain(){
-    
+    const [section,setSection] = useContext(SectionContext);
     const [count,setCount ] = useState([]);
     const [transactionDetails, setTransactionDetails] = useState([]);
 
@@ -73,10 +76,10 @@ export default function DashboardMain(){
                 <h3 class="Ltitle">Library Info</h3>
                 <div class="Lwrap">
                     {/*book box*/}
-                    <div class="book light-red" >
+                    <div class="book light-red" onClick={()=>{setSection(2)}}>
                         <div class="box-header">
                             <div class="bnumber">
-                                <span class="booktitle">
+                                <span class="booktitle" >
                                     BOOKS
                                 </span>
                                 <span class="btitle">
