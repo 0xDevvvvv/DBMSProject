@@ -1,0 +1,63 @@
+/*body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}*/
+
+.book-form {
+    width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-form h2 {
+    text-align: center;
+    color: rgba(133, 99, 186, 255);
+}
+
+.book-form form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+.book-form label {
+    font-weight: bold;
+    color: rgba(133, 99, 186, 255);
+}
+
+.book-form input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.book-form input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.book-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.book-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}

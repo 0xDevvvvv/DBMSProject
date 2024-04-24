@@ -7,22 +7,19 @@
     font-family: 'Poppins', sans-serif;
   
 }
-
 body{
-    display: flex;
+    display:flex;
 }
-
-
 .BOOKS-main{
+    
     position: relative;
     background: #ebe9e9;
-    
     width: 100%;
     padding: 1rem;
 
 }
 
-.header{
+.BOOKS-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,23 +30,23 @@ body{
     margin-bottom: 0.5rem;
 }
 
-.title{
+.BOOKS-title{
     color: rgba(133,99,186,255);
 }
-.title h1{
-    margin-left: 700px;
+.BOOKS-title h1{
+
     font-size: 50px;
 }
-.title h2{
+.BOOKS-title h2{
     padding: 5px;
 }
 
-.search{
+.BOOKS-search{
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.searchbox{
+.BOOKS-searchbox{
     background: rgb(237, 237, 237);
     border-radius: 15px;
     color: rgba(133,99,186,255);
@@ -59,23 +56,23 @@ body{
     padding :4px 12px;
 }
 
-.searchbox input{
+.BOOKS-searchbox input{
     border: none;
     background:transparent;
     padding: 10px;
 }
 
-.searchbox i{
+.BOOKS-searchbox i{
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.5s ease-out;
 }
 
-.searchbox i:hover{
+.BOOKS-searchbox i:hover{
     transform: scale(1.1);
 }
 
-.add-button button {
+.BOOKS-add-button button {
     display:block;
     width: 20%;
     padding: 10px;
@@ -88,7 +85,7 @@ body{
     font-size: 16px;
 }
 
-.add-button button:hover {
+.BOOKS-add-button button:hover {
     background-color: #0056b3;
 }
 
@@ -97,58 +94,58 @@ body{
 }
 
 
-.Ttable{
+.BOOKS-Ttable{
     background: #fff;
     margin-top: 1rem;
     border-radius: 10px;
     padding: 2rem;
 }
 
-.Ttitle{
+.BOOKS-Ttitle{
     font-size: 2rem;
     font-weight: 600;
     color: rgba(113, 99, 186, 255);
     padding-bottom: 10px;
 }
-.container{
+.BOOKS-container{
     width: 100%;
 }
 
-table{
+.BOOKS-table{
     width: 100%;
     border-collapse: collapse;
 }
 
-thead{
+.BOOKS-thead{
     background: rgba(113, 99, 186, 255);
     color: #fff;
 }
 
-th{
+.BOOKS-Ttable th{
     padding: 15px;
     text-align: left;
 }
 
-tbody{
+.BOOKS-Ttable tbody{
     background: #f2f2f2;
 }
 
-td{
+.BOOKS-Ttable td{
     padding: 15px;
     font-size: 14px;
     color: #333;
 }
 
-tr:nth-child(even){
+.BOOKS-Ttable tr:nth-child(even){
     background: #fff;
 }
 
-tfoot{
+.BOOKS-Ttable tfoot{
     background: rgba(113, 99, 186, 255);
     font-weight: bold;
     color: rgba(113, 99, 186, 255);
 }
 
-tfoot td{
+.BOOKS-Ttable tfoot td{
     padding: 15px;
 }

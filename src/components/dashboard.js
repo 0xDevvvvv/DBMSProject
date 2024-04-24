@@ -3,6 +3,7 @@ import {SectionContext} from "../context/context";
 import { useState } from "react";
 import { useContext } from "react";
 import { useAuth } from "../context/AuthContext";
+import Books from "./books";
 import DashboardMain from "./dashboard-main";
 import "../assets/css/dashboard.css";
 
@@ -57,7 +58,8 @@ function Dashboard(){
         {
             {
                 0:<DashboardMain/>,
-                1:<div>Hello</div>
+                1:<div>Hello</div>,
+                2:<Books/>
             }[section]
         }
     </div>
