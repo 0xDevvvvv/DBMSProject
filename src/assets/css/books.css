@@ -69,6 +69,12 @@
 .BOOKS-searchbox i:hover{
     transform: scale(1.1);
 }
+.BOOKS-add-button{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
 
 .BOOKS-add-button button {
     display:block;
@@ -142,6 +148,29 @@
     font-weight: bold;
     color: rgba(113, 99, 186, 255);
 }
+.delete-btn {
+    /*background: rgba(113, 99, 186, 255);*/
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+.bxs-trash{
+    padding-right: 10px;
+    color: white;
+    font-size: 15px;
+}
+
+
 
 .BOOKS-Ttable tfoot td{
     padding: 15px;

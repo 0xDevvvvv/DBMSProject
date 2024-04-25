@@ -113,7 +113,7 @@ function Books(){
                 </div>
                 <div class="BOOKS-search">
                     <div class="BOOKS-searchbox">
-                        <i class="bx bx-search" onClick={bookSearch}></i>
+                        <i class="bx bx-search" ></i>
                         <input type="text" placeholder="Search" onChange={(e)=>{setSearchParam(e.target.value)}} />
                     </div>
                 </div>
@@ -143,9 +143,13 @@ function Books(){
                         </thead>
         
                         <tbody>
-                            {bookdetails.map((doc)=>{
+                            {bookdetails
+                            .filter((doc)=>{
+                                return ((searchParam.toLowerCase()===""?doc:doc.BookName.toLowerCase().includes(searchParam) ))
+                            })
+                            .map((doc)=>{
                                 return(
-                                <tr>
+                                <tr key={doc.BookID}>
                                     <td>{doc.BookID}</td>
                                     <td>{doc.BookName}</td>
                                     <td>{doc.LibID}</td>
