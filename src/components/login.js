@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import{getDocs,query,where,limit,orderBy,getCountFromServer} from "firebase/firestore";
 import { LibraryUsersRef } from "../context/DBContext";
-
+import { UserContext } from "../context/context";
 import { useAuth } from "../context/AuthContext";
 
 import "../assets/css/login.css"
@@ -24,8 +24,8 @@ function LoginForm(){
         navigate("/dashboard");
     }
     
+    const [user,setUser] = useContext(UserContext);
     const [username,setUsername] = useState("");
-    const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const { login }  = useAuth();
 
@@ -42,9 +42,7 @@ function LoginForm(){
             else{
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc)=>{
-
-                    setEmail(doc.data().LibEmail)
-                    login(email,password).then(()=>{
+                    login(doc.data().LibEmail.toString(),password).then(()=>{
                         dashboardNavigate();
                     }).catch((err)=>{
                         console.log(err);
