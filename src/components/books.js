@@ -2,7 +2,7 @@ import React from "react";
 
 import { useState ,useEffect} from "react";
 import { BookRef,BookGenreRef } from "../context/DBContext";
-import { getDocs,getCountFromServer,query,where,or } from "firebase/firestore";
+import { getDocs,deleteDoc,doc,getCountFromServer,query,where,or, orderBy } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import AddBook from "./addBook";
 
@@ -31,6 +31,7 @@ function Books(){
     const [bookdetails, setBookDetails] = useState([]);
     const [searchParam,setSearchParam] = useState("");
     const [addBookForm,setAddBookForm] = useState(false);
+    const [genreID,setGenreID] = useState("");
 
     const bookSearch = async () =>{
         if(searchParam=="")
@@ -63,7 +64,8 @@ function Books(){
     }
     const fetchBookDetails = async () =>{
         try{
-            const data = await getDocs(BookRef)
+            const q = query(BookRef,orderBy("BookID","desc"));
+            const data = await getDocs(q)
             const filtereddata = data.docs.map((doc)=>({
                 ...doc.data(),
                 id:doc.id,
@@ -74,6 +76,24 @@ function Books(){
         }
         
     }
+    const deleteBooks = async (id,bookID) => {
+        try{
+            
+            const d = doc(BookRef,id);
+            const genre = query(BookGenreRef,where("BookID","==",bookID))
+            const genredata = await getDocs(genre);
+            genredata.forEach(async (d)=>{
+                const genredoc = doc(BookGenreRef,d.id)
+                await deleteDoc(genredoc);
+            })
+            await deleteDoc(d);
+            alert("Book Deleted Successfully");
+            fetchBookDetails();
+        }catch(err){
+            console.log(err)
+        }
+    }
+
 
     useEffect(()=>{
         fetchBookCount();
@@ -103,6 +123,8 @@ function Books(){
                 <Popup trigger={<button type="submit">Add Book</button>} position="right center">
                     <AddBook/>
                 </Popup>
+                <button type="submit">Edit Book</button>
+                <button type="submit" onClick={fetchBookDetails}>Refresh</button>
             </div>
             <div class="BOOKS-Ttable">
                 <h3 class="BOOKS-Ttitle">BOOKS DATA</h3>
@@ -115,7 +137,8 @@ function Books(){
                                 <th>Lib ID</th>
                                 <th>Availability</th>
                                 <th>Genre</th> 
-                                <th>Return Date</th> 
+                                {/*<th>Return Date</th>*/} 
+                                <th></th>
                             </tr>
                         </thead>
         
@@ -128,7 +151,8 @@ function Books(){
                                     <td>{doc.LibID}</td>
                                     <td>{doc.BookAvailability}</td>
                                     <GetGenre BookID={doc.BookID}/>
-                                    <td>{doc.ReturnBookDate&&doc.ReturnBookDate.toDate()&&doc.ReturnBookDate.toDate().toString()}</td>
+                                   {/*<td>{doc.ReturnBookDate&&doc.ReturnBookDate.toDate()&&doc.ReturnBookDate.toDate().toString()}</td>*/}
+                                    <td><button class="delete-btn" onClick={()=>{deleteBooks(doc.id,doc.BookID)}}><i class='bx bxs-trash'></i>Delete</button></td>
                                 </tr>
 
                                 );
@@ -144,6 +168,7 @@ function Books(){
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                {/*<td></td>*/}
                             </tr>
                         </tfoot>
                     </table>
