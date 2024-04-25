@@ -71,14 +71,19 @@
 }
 .BOOKS-add-button{
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
+    margin-right:2%;
+
     
+}
+.BOOKS-add-button .refresh-btn{
+    width: 5%;
 }
 
 
 .BOOKS-add-button button {
     display:block;
-    width: 20%;
+    width: 10%;
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -148,24 +153,31 @@
     font-weight: bold;
     color: rgba(113, 99, 186, 255);
 }
+#fn-btn{
+    align-items: center;
+    gap: 2%;
+    display: flex;
+}
 .delete-btn {
     /*background: rgba(113, 99, 186, 255);*/
     background: red;
+    width:25%;
     color: white;
-    padding: 8px 12px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     font-size: 13px;
     font-weight: 600;
 }
-
+.edit-btn{
+    width:25%;
+    float:right;
+}
 .delete-btn:hover {
     background-color: #d32f2f;
 }
 
 .bxs-trash{
-    padding-right: 10px;
     color: white;
     font-size: 15px;
 }

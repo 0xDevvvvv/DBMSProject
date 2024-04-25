@@ -47,6 +47,7 @@ function Books(){
                     id:doc.id,
                 }));
                 setBookDetails(filtereddata);
+                
             }
             catch(err){
                 console.log(err);
@@ -113,18 +114,18 @@ function Books(){
                 </div>
                 <div class="BOOKS-search">
                     <div class="BOOKS-searchbox">
-                        <i class="bx bx-search" ></i>
+                        <i class="bx bx-search" /*onClick={bookSearch}*/></i>
                         <input type="text" placeholder="Search" onChange={(e)=>{setSearchParam(e.target.value)}} />
                     </div>
                 </div>
                 
             </div>
             <div class="BOOKS-add-button">
-                <Popup trigger={<button type="submit">Add Book</button>} position="right center">
+                <Popup trigger={<button type="submit">Add Book</button>} position="left center">
                     <AddBook/>
                 </Popup>
-                <button type="submit">Edit Book</button>
-                <button type="submit" onClick={fetchBookDetails}>Refresh</button>
+                {/*<button type="submit">Edit Book</button>*/}
+                <button type="submit" class="refresh-btn" onClick={fetchBookDetails}><i class='bx bx-refresh'></i></button>
             </div>
             <div class="BOOKS-Ttable">
                 <h3 class="BOOKS-Ttitle">BOOKS DATA</h3>
@@ -156,7 +157,10 @@ function Books(){
                                     <td>{doc.BookAvailability}</td>
                                     <GetGenre BookID={doc.BookID}/>
                                    {/*<td>{doc.ReturnBookDate&&doc.ReturnBookDate.toDate()&&doc.ReturnBookDate.toDate().toString()}</td>*/}
-                                    <td><button class="delete-btn" onClick={()=>{deleteBooks(doc.id,doc.BookID)}}><i class='bx bxs-trash'></i>Delete</button></td>
+                                    <td id="fn-btn">
+                                        <button class="delete-btn" onClick={()=>{deleteBooks(doc.id,doc.BookID)}}><i class='bx bxs-trash'></i></button>
+                                        <button class="edit-btn"><i class='bx bxs-pencil'></i></button>
+                                    </td>
                                 </tr>
 
                                 );
