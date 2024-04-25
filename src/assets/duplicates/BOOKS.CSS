@@ -37,7 +37,7 @@ body{
     color: rgba(133,99,186,255);
 }
 .title h1{
-    margin-left: 700px;
+    
     font-size: 50px;
 }
 .title h2{
@@ -75,10 +75,17 @@ body{
     transform: scale(1.1);
 }
 
+.add-button{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
 .add-button button {
     display:block;
     width: 20%;
     padding: 10px;
+    
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -152,3 +159,27 @@ tfoot{
 tfoot td{
     padding: 15px;
 }
+
+
+.delete-btn {
+    /*background: rgba(113, 99, 186, 255);*/
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+.bxs-trash{
+    padding-right: 10px;
+    color: white;
+    font-size: 15px;
+}
+
