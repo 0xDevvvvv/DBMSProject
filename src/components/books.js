@@ -11,7 +11,7 @@ import "../assets/css/books.css";
 
 
 function EditBook(props){
-    
+
 
     const [bookName,setBookName] = useState(props.BookName);
     const [authorName,setAuthorName] = useState(props.author);
@@ -49,7 +49,7 @@ function EditBook(props){
                 Genre : genre,
             })
 
-            alert("Book Updated Successfully")
+            alert("Book Updated Successfully. Please Refresh to see changes")
         }catch(err){
             console.log(err)
         }
