@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { useAuth } from "../context/AuthContext";
 import Books from "./books";
 import DashboardMain from "./dashboard-main";
+import AdminSettings from "./adminSettings";
+import BookTransaction from "./bookTransaction";
 import "../assets/css/dashboard.css";
 
 
@@ -59,9 +61,10 @@ function Dashboard(){
         {
             {
                 0:<DashboardMain/>,
-                1:<div>Hello</div>,
+                1:<AdminSettings/>,
                 2:<Books/>,
-                3:<Users/>
+                3:<Users/>,
+                4:<BookTransaction/>
             }[section]
         }
     </div>

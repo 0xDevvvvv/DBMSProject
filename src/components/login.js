@@ -31,7 +31,7 @@ function LoginForm(){
 
     const LoginUser = async (e)=>{
         e.preventDefault();
-        const q = query(LibraryUsersRef,where("LibUsername","==",username),limit(1),orderBy("LibUsername","asc"));
+        const q = query(LibraryUsersRef,where("LibUsername","==",username.toString()),limit(1),orderBy("LibUsername","asc"));
         const count = await getCountFromServer(q);
 
         try{
@@ -42,7 +42,8 @@ function LoginForm(){
             else{
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc)=>{
-                    login(doc.data().LibEmail.toString(),password).then(()=>{
+                    console.log(doc.data().LibEmail)
+                    login(doc.data().LibEmail,password).then(()=>{
                         dashboardNavigate();
                     }).catch((err)=>{
                         console.log(err);
@@ -53,7 +54,7 @@ function LoginForm(){
             }
         }
         catch(err){
-            return(<div>Incorrect Details</div>)
+            console.log(err)
         }
     }
 

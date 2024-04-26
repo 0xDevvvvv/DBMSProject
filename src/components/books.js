@@ -210,9 +210,10 @@ function Books(){
                             <tr>
                                 <th>Book ID</th>
                                 <th>Book Name</th>
-                                <th>Lib ID</th>
+                                <th>Author Name</th>
+                                <th>Genre</th>
                                 <th>Availability</th>
-                                <th>Genre</th> 
+                                 
                                 {/*<th>Return Date</th>*/} 
                                 <th></th>
                             </tr>
@@ -228,9 +229,10 @@ function Books(){
                                 <tr key={doc.BookID}>
                                     <td>{doc.BookID}</td>
                                     <td>{doc.BookName}</td>
-                                    <td>{doc.LibID}</td>
-                                    <td>{doc.BookAvailability}</td>
+                                    <td>{doc.Author}</td>
                                     <td><GetGenre BookID={doc.BookID}/></td>
+                                    <td>{doc.BookAvailability}</td>
+                                    
                                    {/*<td>{doc.ReturnBookDate&&doc.ReturnBookDate.toDate()&&doc.ReturnBookDate.toDate().toString()}</td>*/}
                                     <td id="fn-btn">
                                         <button class="delete-btn" onClick={()=>{deleteBooks(doc.id,doc.BookID)}}><i class='bx bxs-trash'></i></button>

@@ -8,16 +8,19 @@
   
 }
 
-.BOOKS-main{
 
+
+
+.BOOKS-main{
     position: relative;
     background: #ebe9e9;
+    
     width: 100%;
     padding: 1rem;
 
 }
 
-.BOOKS-header{
+.header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,23 +31,23 @@
     margin-bottom: 0.5rem;
 }
 
-.BOOKS-title{
+.TRtitle{
     color: rgba(133,99,186,255);
 }
-.BOOKS-title h1{
+.TRtitle h1{
     
-    font-size: 50px;
+    font-size: 40px;
 }
-.BOOKS-title h2{
+.TRtitle h2{
     padding: 5px;
 }
 
-.BOOKS-search{
+.search{
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.BOOKS-searchbox{
+.searchbox{
     background: rgb(237, 237, 237);
     border-radius: 15px;
     color: rgba(133,99,186,255);
@@ -54,48 +57,37 @@
     padding :4px 12px;
 }
 
-.BOOKS-searchbox input{
+.searchbox input{
     border: none;
     background:transparent;
     padding: 10px;
 }
 
-.BOOKS-searchbox i{
+.searchbox i{
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.5s ease-out;
 }
 
-.BOOKS-searchbox i:hover{
+.searchbox i:hover{
     transform: scale(1.1);
 }
-.BOOKS-add-button{
-    display: flex;
-    justify-content: right;
-    gap:0.5%;
-    margin-right:2%;
 
-    
-}
-.BOOKS-add-button .refresh-btn{
-    width: 5%;
-    background:rgba(113, 99, 186, 255);
-}
-
-
-.BOOKS-add-button button {
+.add-button button {
     display:block;
-    width: 10%;
+    width: 20%;
     padding: 10px;
+    
     background-color: #007bff;
     color: #fff;
     border: none;
+    
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
 }
 
-.BOOKS-add-button button:hover {
+.add-button button:hover {
     background-color: #0056b3;
 }
 
@@ -104,88 +96,58 @@
 }
 
 
-.BOOKS-Ttable{
+.Ttable{
     background: #fff;
     margin-top: 1rem;
     border-radius: 10px;
     padding: 2rem;
 }
 
-.BOOKS-Ttitle{
+.Ttitle{
     font-size: 2rem;
     font-weight: 600;
     color: rgba(113, 99, 186, 255);
     padding-bottom: 10px;
 }
-.BOOKS-container{
+.container{
     width: 100%;
 }
 
-.BOOKS-table table{
+table{
     width: 100%;
     border-collapse: collapse;
 }
 
-.BOOKS-thead thead{
+thead{
     background: rgba(113, 99, 186, 255);
     color: #fff;
 }
 
-.BOOKS-Ttable th{
+th{
     padding: 15px;
     text-align: left;
 }
 
-.BOOKS-Ttable tbody{
+tbody{
     background: #f2f2f2;
 }
 
-.BOOKS-Ttable td{
+td{
     padding: 15px;
     font-size: 14px;
     color: #333;
 }
 
-.BOOKS-Ttable tr:nth-child(even){
+tr:nth-child(even){
     background: #fff;
 }
 
-.BOOKS-Ttable tfoot{
+tfoot{
     background: rgba(113, 99, 186, 255);
     font-weight: bold;
     color: rgba(113, 99, 186, 255);
 }
-#fn-btn{
-    align-items: center;
-    gap: 2%;
-    display: flex;
-}
-.delete-btn {
-    /*background: rgba(113, 99, 186, 255);*/
-    background: red;
-    width:25%;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-}
-.edit-btn{
-    width:25%;
-    float:right;
-}
-.delete-btn:hover {
-    background-color: #d32f2f;
-}
 
-.bxs-trash{
-    color: white;
-    font-size: 15px;
-}
-
-
-
-.BOOKS-Ttable tfoot td{
+tfoot td{
     padding: 15px;
 }

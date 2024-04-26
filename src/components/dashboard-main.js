@@ -114,7 +114,7 @@ export default function DashboardMain(){
                     {/*book transactions*/}
                     <div class="book light-green" >
                         <div class="box-header">
-                            <div class="bnumber">
+                            <div class="bnumber" onClick={()=>{setSection(4)}}>
                                 <span class="booktitle">
                                         BOOK TRANSACTIONS
                                 </span>
