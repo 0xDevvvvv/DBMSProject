@@ -6,11 +6,13 @@ function ReturnRecentUser (props) {
     const [userDetails,setUserDetails] = useState([]);
     const fetchUserDetails = async () =>{
         try{
+                console.log(props.UserID)
                 const data = await getDocs(query(UsersRef,where("UserID","==",props.UserID)),limit(1))
                 data.forEach((doc)=>{
                     setUserDetails(doc.data())
 
                 })
+                console.log(userDetails.UserName)
         }catch(err){
             console.log(err)
         }
