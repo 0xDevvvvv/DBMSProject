@@ -16,7 +16,6 @@ function AddBook(){
     const [availability,setAvailability] = useState(0);
     const [LibID,setLibID] = useState();
     const [BookID,setBookID] = useState(0);
-    const {user,setUser} = useContext(UserContext);
     const {currentUser} = useAuth();
 
     const clearStates = () =>{
@@ -66,7 +65,7 @@ function AddBook(){
                     Genre : genre
                 })
                 clearStates()
-                alert("Book Added Succesfully");
+                alert("Book Added Succesfully.Please Refresh to see chages");
             }
         }catch(err){
             console.log(err)

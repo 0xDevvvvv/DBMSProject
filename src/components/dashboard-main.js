@@ -64,13 +64,17 @@ export default function DashboardMain(){
                 <h1>Admin Page</h1>
                 <h2>DashBoard</h2>
                 </div>
-                <div class="db-search">
+                <div class="user-info">
+                    <img src="" alt=""/>
+                    <h3>User Name</h3>  
+                </div>
+                {/*<div class="db-search">
                     <div class="db-searchbox">
                         <i class="bx bx-search"></i>
                         <input type="text" placeholder="Search" />
                     </div>
-                    {/*img*/}
-                </div>
+                    
+    </div>*/}
             </div>
             <div class="Lbox">
                 <h3 class="Ltitle">Library Info</h3>
@@ -94,7 +98,7 @@ export default function DashboardMain(){
                     {/*user box*/}
                     <div class="book light-purple" >
                         <div class="box-header">
-                            <div class="bnumber">
+                            <div class="bnumber" onClick={()=>{setSection(3)}}>
                                 <span class="booktitle">
                                         USERS
                                 </span>

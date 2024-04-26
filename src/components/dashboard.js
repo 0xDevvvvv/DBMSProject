@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {SectionContext} from "../context/context";
 import { useState } from "react";
+import Users from "./users";
 import { useContext } from "react";
 import { useAuth } from "../context/AuthContext";
 import Books from "./books";
@@ -59,7 +60,8 @@ function Dashboard(){
             {
                 0:<DashboardMain/>,
                 1:<div>Hello</div>,
-                2:<Books/>
+                2:<Books/>,
+                3:<Users/>
             }[section]
         }
     </div>

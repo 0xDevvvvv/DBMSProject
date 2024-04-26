@@ -108,7 +108,7 @@ function Books(){
     const [addBookForm,setAddBookForm] = useState(false);
     const [genreID,setGenreID] = useState("");
 
-    const bookSearch = async () =>{
+    {/*const bookSearch = async () =>{
         if(searchParam=="")
         {
             fetchBookDetails();
@@ -128,7 +128,7 @@ function Books(){
                 console.log(err);
             }
         }
-    }
+    }*/}
 
     const fetchBookCount =  async() =>{
         try{
@@ -165,6 +165,7 @@ function Books(){
             await deleteDoc(d);
             alert("Book Deleted Successfully");
             fetchBookDetails();
+            setBooksCount(booksCount-1)
         }catch(err){
             console.log(err)
         }
@@ -174,7 +175,7 @@ function Books(){
     useEffect(()=>{
         fetchBookCount();
         fetchBookDetails();
-    },[])
+    },[booksCount])
 
     return(
 
@@ -200,7 +201,7 @@ function Books(){
                     <AddBook/>
                 </Popup>
                 {/*<button type="submit">Edit Book</button>*/}
-                <button type="submit" class="refresh-btn" onClick={fetchBookDetails}><i class='bx bx-refresh'></i></button>
+                <button type="submit" class="refresh-btn" onClick={()=>{fetchBookCount();fetchBookDetails();}}><i class='bx bx-refresh'></i></button>
             </div>
             <div class="BOOKS-Ttable">
                 <h3 class="BOOKS-Ttitle">BOOKS DATA</h3>
