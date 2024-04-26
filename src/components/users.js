@@ -1,9 +1,88 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import { UserPhoneRef, UsersRef } from "../context/DBContext";
-import { where,getCountFromServer,query,getDocs,orderBy ,deleteDoc,doc} from "firebase/firestore";
+import { where,getCountFromServer,query,getDocs,orderBy ,updateDoc,deleteDoc,doc} from "firebase/firestore";
 import { useEffect,useState } from "react";
 import AddUser from "./addUser";
+import "../assets/css/books.css";
+
+
+
+function EditUser(props){
+
+
+    const [userName,setUserName] = useState(props.UserName);
+    const [UserAddress,setUserAddress] = useState(props.UserAddress);
+    const [phone,setPhone] = useState("");
+    const [email,setEmail] = useState(props.email);
+    const [UserID,setUserID] = useState(props.UserID);
+    const [phoneID,setPhoneID] = useState("");
+    const id = props.id;
+
+    
+    const getPhone = async()=>{
+        const q = query(UserPhoneRef,where("UserID","==",Number(UserID)));
+        try{
+            const data = await getDocs(q);
+            data.forEach((doc)=>{
+                setPhone(doc.data().UserPhoneNo)
+                setPhoneID(doc.id);
+            })
+        }catch(err){
+            console.log(err)
+        }
+    }   
+
+    const updateUser = async (e) =>{
+        e.preventDefault();
+        const b = doc(UsersRef,id);
+        const g = doc(UserPhoneRef,phoneID);
+        try{
+            await updateDoc(b,{
+                UserName : userName,
+                UserAddress : UserAddress,
+                Email : email
+            }
+            )
+            await updateDoc(g,{
+                UserPhoneNo :phone,
+            })
+
+            alert("User Updated Successfully. Please Refresh to see changes")
+        }catch(err){
+            console.log(err)
+        }
+
+    }
+
+    useEffect(()=>{
+        getPhone();
+    },[])
+
+    return(
+        <div class="book-form">
+            <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+            />
+            <h2>User Information</h2>
+            <form id="bookForm">
+                <label for="bookName">User Name:</label>
+                <input type="text" id="bookName" placeholder="Enter User Name" name="bookName" value={userName} onChange={(e)=>{setUserName(e.target.value)}} required />
+                
+                <label for="author">Address:</label>
+                <input type="text" id="author" placeholder="Enter Address" name="author" value={UserAddress} required onChange={(e)=>{setUserAddress(e.target.value)}} />
+                
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" placeholder="Enter phone" name="genre" value={phone} required onChange={(e)=>{setPhone(e.target.value)}} />
+                
+                <label for="availability">Email:</label>
+                <input type="email" id="availability" placeholder="Enter Email" name="availability" value={email} required onChange={(e)=>{setEmail(e.target.value)}} />
+                <input type="submit" onClick={(e)=>{updateUser(e)}} value="Submit"  />
+            </form>
+        </div>
+    );
+}
 
 
 function GetPhone(props){
@@ -129,7 +208,7 @@ function Users(){
                                     {/*<td>{doc.ReturnBookDate&&doc.ReturnBookDate.toDate()&&doc.ReturnBookDate.toDate().toString()}</td>*/}
                                         <td id="fn-btn">
                                             <button class="delete-btn" onClick={()=>{deleteUsers(doc.id,doc.UserID)}}><i class='bx bxs-trash'></i></button>
-                                            <Popup trigger={<button class="edit-btn"><i class='bx bxs-pencil'></i></button>} position="left"></Popup>
+                                            <Popup trigger={<button class="edit-btn"><i class='bx bxs-pencil'></i></button>} position="left"><EditUser id={doc.id} UserID={doc.UserID} UserAddress={doc.UserAddress} email={doc.Email} UserName={doc.UserName}  /></Popup>
                                         </td>
                                     </tr>
                                     );

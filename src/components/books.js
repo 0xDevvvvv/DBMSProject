@@ -21,7 +21,6 @@ function EditBook(props){
     const [genreID,setGenreID] = useState("");
     const id = props.id;
 
-    console.log(Number(BookID))
     const getGenre = async()=>{
         const q = query(BookGenreRef,where("BookID","==",Number(BookID)));
         try{
