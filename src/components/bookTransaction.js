@@ -89,8 +89,8 @@ function BookTransaction(){
                             <th>User Name</th>
                             <th>Book ID</th>
                             <th>Book Name</th>
-                            <th>Publish Date</th>
-                            <th>Return Date</th> 
+                            <th>Return/Returned Date</th>
+                            <th>Type</th> 
                         </tr>
                     </thead>
     
