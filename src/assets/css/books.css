@@ -189,3 +189,9 @@
 .BOOKS-Ttable tfoot td{
     padding: 15px;
 }
+.trdelete-btn{
+    background-color: red;
+}
+.trdelete-btn:hover {
+    background-color: #d32f2f;
+}

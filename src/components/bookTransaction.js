@@ -1,7 +1,7 @@
 import React from "react";
 import { useState ,useEffect} from "react";
 import Popup from "reactjs-popup";
-import { query,getCountFromServer,getDocs } from "firebase/firestore";
+import { query,getCountFromServer,getDocs,doc, deleteDoc } from "firebase/firestore";
 import ReturnRecentBook from "./recentBookTrnsn";
 import ReturnRecentUser from "./recentUserTrnsn";
 import "../assets/css/books.css";
@@ -18,6 +18,17 @@ function BookTransaction(){
         try{
             const q = await getCountFromServer(TransactionRef);
             setTransactionCount(q.data().count);
+        }catch(err){
+            console.log(err)
+        }
+    }
+    const deleteTransaction = async (id) => {
+        const d = doc(TransactionRef,id)
+        try{
+            await deleteDoc(d);
+            alert("Transaction deleted successfully");
+            fetchTDetails();
+            fetchTCount();
         }catch(err){
             console.log(err)
         }
@@ -55,7 +66,7 @@ function BookTransaction(){
             rel="stylesheet"
             />
         <div class="BOOKS-header">
-            <div class="TRtitle">
+            <div class="BOOKS-title">
               <h1>BOOK TRANSACTIONS</h1>
               <h2>Total Transactions</h2>
               <h2>{transactionCount}</h2>
@@ -82,8 +93,8 @@ function BookTransaction(){
         <div class="BOOKS-Ttable">
             <h3 class="BOOKS-Ttitle">BOOK TRANSACTION DATA</h3>
             <div class="BOOKS-container">
-                <table>
-                    <thead>
+                <table class="BOOKS-table">
+                    <thead class="BOOKS-thead">
                         <tr>
                             <th>User ID</th>
                             <th>User Name</th>
@@ -91,6 +102,7 @@ function BookTransaction(){
                             <th>Book Name</th>
                             <th>Return/Returned Date</th>
                             <th>Type</th> 
+                            <th></th>
                         </tr>
                     </thead>
     
@@ -104,8 +116,11 @@ function BookTransaction(){
                                             <td>{d.BookID}</td>
                                             <td>{d.Date&&d.Date.toDate()&&d.Date.toDate().toString()}</td>
                                             <td>{d.Type}</td>
+                                            <td id="fn-btn">
+                                                <button class="trdelete-btn" onClick={()=>{deleteTransaction(d.id)}}><i class='bx bxs-trash'></i></button>
+                                            </td>
                                         </tr>
-                                    )
+                                    );
                                     })}
 
                             
@@ -113,6 +128,7 @@ function BookTransaction(){
                         </tbody>
                         <tfoot>
                             <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
