@@ -107,9 +107,9 @@ function Books(){
 
     const [booksCount,setBooksCount] = useState(0);
     const [bookdetails, setBookDetails] = useState([]);
-    const [searchParam,setSearchParam] = useState("");
+    const [searchParam,setSearchParam] = useState("BookName");
     const [addBookForm,setAddBookForm] = useState(false);
-    const [search,setSearch] = useState("BookName");
+    const [search,setSearch] = useState("");
     const [genreID,setGenreID] = useState("");
 
     {/*const bookSearch = async () =>{
