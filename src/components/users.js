@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import { UserPhoneRef, UsersRef } from "../context/DBContext";
 import { where,getCountFromServer,query,getDocs,orderBy ,updateDoc,deleteDoc,doc} from "firebase/firestore";
 import { useEffect,useState } from "react";
+import Select from "react-dropdown-select";
 import AddUser from "./addUser";
 import "../assets/css/books.css";
 
@@ -103,9 +104,10 @@ function GetPhone(props){
 
 function Users(){
     const [userCount,setUserCount] = useState(0);
+    const [search,setSearch] = useState("");
     const [userdetails, setUserDetails] = useState([]);
-    const [searchParam,setSearchParam] = useState("");
-
+    const [searchParam,setSearchParam] = useState("UserName");
+    const options = [{value:"Email",label:"Email"},{value:"UserID",label:"UserID"},{value:"Place",label:"Place"},{value:"UserName",label:"UserName"}]
 
 
     const fetchUserCount =  async() =>{
@@ -166,10 +168,11 @@ function Users(){
            
            
             <div class="BOOKS-search">
+            <Select placeholder="Search Filter (Default:UserName)" value = {searchParam}  options={options} onChange={(values)=>{(values.map((d)=>{setSearchParam(d.value)}))}} /> 
               <div class="BOOKS-searchbox">
                 <i class="bx bx-search"></i>
     
-                <input type="text" placeholder="Search" onChange={(e)=>{setSearchParam(e.target.value)}}/>
+                <input type="text" placeholder="Search" onChange={(e)=>{setSearch(e.target.value)}}/>
               </div>
               
             </div>
@@ -195,7 +198,7 @@ function Users(){
                         <tbody>
                             {userdetails
                                 .filter((doc)=>{
-                                    return ((searchParam.toLowerCase()===""?doc:doc.UserName.toLowerCase().includes(searchParam) ))
+                                    return ((search.toLowerCase()===""?doc:(doc.UserName.toLowerCase().includes(search) && searchParam==="UserName") || (doc.UserAddress.toLowerCase().includes(search) && searchParam==="Place") || (doc.Email.toLowerCase().includes(search) && searchParam==="Email") || (doc.UserID==Number(search) && searchParam==="UserID") ))
                                 })
                                 .map((doc)=>{
                                     return(

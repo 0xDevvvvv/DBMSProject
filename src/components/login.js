@@ -45,6 +45,7 @@ function LoginForm(){
                     console.log(doc.data().LibEmail)
                     login(doc.data().LibEmail,password).then(()=>{
                         dashboardNavigate();
+                        setUser(username);
                     }).catch((err)=>{
                         console.log(err);
                     })

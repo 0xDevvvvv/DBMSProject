@@ -3,6 +3,7 @@ import { UserContext } from "../context/context";
 import { useState ,useEffect} from "react";
 import { BookRef,BookGenreRef } from "../context/DBContext";
 import { getDocs,deleteDoc,doc,getCountFromServer,query,where,or, orderBy,updateDoc } from "firebase/firestore";
+import Select from "react-dropdown-select";
 import Popup from "reactjs-popup";
 import AddBook from "./addBook";
 
@@ -101,10 +102,14 @@ function GetGenre(props){
 }
 
 function Books(){
+
+    const options = [{value:"Author",label:"Author"},{value:"BookID",label:"BookID"},{value:"BookName",label:"Book Name"}]
+
     const [booksCount,setBooksCount] = useState(0);
     const [bookdetails, setBookDetails] = useState([]);
     const [searchParam,setSearchParam] = useState("");
     const [addBookForm,setAddBookForm] = useState(false);
+    const [search,setSearch] = useState("BookName");
     const [genreID,setGenreID] = useState("");
 
     {/*const bookSearch = async () =>{
@@ -188,9 +193,10 @@ function Books(){
                     <h2>{booksCount}</h2>
                 </div>
                 <div class="BOOKS-search">
+                <Select placeholder="Search Filter (Default:BookName)" value = {searchParam}  options={options} onChange={(values)=>{(values.map((d)=>{setSearchParam(d.value)}))}} /> 
                     <div class="BOOKS-searchbox">
                         <i class="bx bx-search" /*onClick={bookSearch}*/></i>
-                        <input type="text" placeholder="Search" onChange={(e)=>{setSearchParam(e.target.value)}} />
+                        <input type="text" placeholder="Search" onChange={(e)=>{setSearch(e.target.value)}} />
                     </div>
                 </div>
                 
@@ -222,7 +228,7 @@ function Books(){
                         <tbody>
                             {bookdetails
                             .filter((doc)=>{
-                                return ((searchParam.toLowerCase()===""?doc:doc.BookName.toLowerCase().includes(searchParam) ))
+                                return ((search.toLowerCase()===""?doc:(doc.BookName.toLowerCase().includes(search)&&searchParam==="BookName") || (doc.Author.toLowerCase().includes(search)&&searchParam==="Author") || (doc.BookID===Number(search)&&searchParam==="BookID")))
                             })
                             .map((doc)=>{
                                 return(

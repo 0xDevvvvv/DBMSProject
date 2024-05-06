@@ -15,7 +15,7 @@ function AddTransaction(){
     const [bookData,setBookData] = useState([]);
     const [bookDetails,setBookDetails] = useState([]);
     const [userDetails,setUserDetails] = useState([]);
-    const [docID,setDocID] = useState("");
+    const [docID,setDocID] = useState('');
 
     const details = async() =>{
         const book = await getDocs(BookRef);
@@ -64,19 +64,18 @@ function AddTransaction(){
                 return
             }
             else{
-                const q = query(BookRef,where("BookID","==",Number(bookID)),limit(1))
+                const q = query(BookRef,where('BookID','==',Number(bookID)),limit(1))
                 const userquery = query(UsersRef,where("UserID","==",Number(userID)),limit(1))
                 const count = await getCountFromServer(q);
                 const usercount = await getCountFromServer(userquery);
                 try{
-                    
                     const data = await getDocs(q);
                     data.forEach((doc)=>{
                         setBookData(doc.data())
-                        setDocID(doc.id)
+                        setDocID(doc.id);
                         setAvail(doc.data().BookAvailability)
                     })
-                }catch(err){console.log(err)}
+                }catch(err){return}
 
                 if(count.data().count==0)
                 {
@@ -95,16 +94,9 @@ function AddTransaction(){
                         return;
                     }
                 }
-
-                await addDoc(TransactionRef,{
-                    BookID : Number(bookID),
-                    UserID: Number(userID),
-                    Type : type,
-                    Date : new Date(),
-                    
-                    
-                })
-                const u = doc(BookRef,docID)
+                if(docID==="")
+                    return;
+                const u = doc(BookRef,docID)    
                 const d = await getDoc(u);
                 if(type==="issue"){
                     
@@ -120,11 +112,20 @@ function AddTransaction(){
                     })
                     setAvail(d.data().BookAvailability+1)
                 }
+                await addDoc(TransactionRef,{
+                    BookID : Number(bookID),
+                    UserID: Number(userID),
+                    Type : type,
+                    Date : date,
+                    
+                    
+                })
+            
                 clearStates()
                 alert("Transaction Added Succesfully. Please Refresh to see changes");
             }
         }catch(err){
-            console.log(err)
+            return;
         }
 
     }
@@ -180,7 +181,7 @@ function AddTransaction(){
                 <Select options={options} onChange={(values)=>{(values.map((d)=>{setType(d.value)}))}} />  
                 
                 <label for="availability">Return/Returned Date:</label>
-                <input type="date" id="availability" placeholder="Enter Email" name="availability"  onChange={(e)=>{setDate(e);console.log(date)}}/>
+                <input type="date" id="availability" placeholder="Enter Email" name="availability"  onChange={(e)=>{setDate(e.target.value);console.log(date)}}/>
                 <input type="submit" value="Submit" onClick={handleAddTransaction} />
             </form>
         </div>

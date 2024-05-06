@@ -9,10 +9,11 @@ import { BookRef,UsersRef,TransactionRef } from "../context/DBContext";
 import { query,where,getDocs,orderBy,limit } from "firebase/firestore";
 import { useState,useEffect, useContext } from "react";
 import { getCountFromServer } from "firebase/firestore";
-import { SectionContext } from "../context/context";
+import { SectionContext, UserContext } from "../context/context";
 
 export default function DashboardMain(){
     const [section,setSection] = useContext(SectionContext);
+    const [user,setUser] = useContext(UserContext)
     const [count,setCount ] = useState([]);
     const [transactionDetails, setTransactionDetails] = useState([]);
 
@@ -65,8 +66,8 @@ export default function DashboardMain(){
                 <h2>DashBoard</h2>
                 </div>
                 <div class="user-info">
-                    <img src="" alt=""/>
-                    <h3>User Name</h3>  
+                    <img src="https://imgs.search.brave.com/smjCUH9YjsYX8YcdogEEaLav6FnMKkm8LMZnGDO6Guo/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvcHJldmll/dy0xeC82Mi81OS9k/ZWZhdWx0LWF2YXRh/ci1waG90by1wbGFj/ZWhvbGRlci1wcm9m/aWxlLWljb24tdmVj/dG9yLTIxNjY2MjU5/LmpwZw" width="20%"/>
+                    <h3>Welcome,{user}</h3>  
                 </div>
                 {/*<div class="db-search">
                     <div class="db-searchbox">
@@ -166,7 +167,7 @@ export default function DashboardMain(){
                                             <ReturnRecentUser UserID={d.UserID}/>
                                             <ReturnRecentBook BookID={d.BookID}/>
                                             <td>{d.BookID}</td>
-                                            <td>{d.Date&&d.Date.toDate()&&d.Date.toDate().toString()}</td>
+                                            <td>{d.Date.toString()}</td>{/*&&d.Date.toDate()&&d.Date.toDate().toString()*/}
                                             <td>{d.Type}</td>
                                         </tr>
                                     )

@@ -2,6 +2,7 @@ import React from "react";
 import { useState ,useEffect} from "react";
 import Popup from "reactjs-popup";
 import { query,getCountFromServer,getDocs,doc, deleteDoc } from "firebase/firestore";
+import Select from "react-dropdown-select";
 import ReturnRecentBook from "./recentBookTrnsn";
 import ReturnRecentUser from "./recentUserTrnsn";
 import "../assets/css/books.css";
@@ -10,9 +11,11 @@ import AddTransaction from "./addTransaction";
 
 
 function BookTransaction(){
-
+    const options = [{value:"Type",label:"Type"},{value:"Date",label:"Date"},{value:"BookID",label:"BookID"}]
     const [transactionCount,setTransactionCount] = useState(0);
     const [transactionDetails,setTransactionDetails] = useState([]);
+    const [search,setSearch] = useState("");
+    const [searchParam,setSearchParam] = useState("Date");
 
     const fetchTCount =  async() =>{
         try{
@@ -75,9 +78,11 @@ function BookTransaction(){
            
            
             <div class="BOOKS-search">
+                <Select placeholder="Search Filter (Default:Date)" value = {searchParam}  options={options} onChange={(values)=>{(values.map((d)=>{setSearchParam(d.value)}))}} /> 
               <div class="BOOKS-searchbox">
+              
                 <i class="bx bx-search"></i>
-                <input type="text" placeholder="Search" />
+                <input type="text" placeholder="Search" onChange={(e)=>{setSearch(e.target.value)}}/>
               </div>
               
             </div>
@@ -98,8 +103,8 @@ function BookTransaction(){
                         <tr>
                             <th>User ID</th>
                             <th>User Name</th>
-                            <th>Book ID</th>
                             <th>Book Name</th>
+                            <th>Book ID</th>
                             <th>Return/Returned Date</th>
                             <th>Type</th> 
                             <th></th>
@@ -107,14 +112,17 @@ function BookTransaction(){
                     </thead>
     
                         <tbody>
-                        {transactionDetails.map((d)=>{
+                        {transactionDetails
+                        .filter((doc)=>{
+                            return((search.toLowerCase()===""?doc:(doc.Date.toLowerCase().includes(search) && searchParam === "Date") || (doc.Type.toLowerCase().includes(search) && searchParam === "Type") || (doc.BookID == Number(search) && searchParam === "BookID")))
+                        }).map((d)=>{
                                         return(
                                         <tr>
                                             <td>{d.UserID}</td>
                                             <ReturnRecentUser UserID={d.UserID}/>
                                             <ReturnRecentBook BookID={d.BookID}/>
                                             <td>{d.BookID}</td>
-                                            <td>{d.Date&&d.Date.toDate()&&d.Date.toDate().toString()}</td>
+                                            <td>{d.Date.toString()}</td>{/**&&d.Date.toDate()&&d.Date.toDate().toString()*/}
                                             <td>{d.Type}</td>
                                             <td id="fn-btn">
                                                 <button class="trdelete-btn" onClick={()=>{deleteTransaction(d.id)}}><i class='bx bxs-trash'></i></button>
