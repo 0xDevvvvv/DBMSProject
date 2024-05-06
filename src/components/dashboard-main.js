@@ -97,9 +97,9 @@ export default function DashboardMain(){
                         </div>
                     </div>
                     {/*user box*/}
-                    <div class="book light-purple" >
+                    <div class="book light-purple"  onClick={()=>{setSection(3)}} >
                         <div class="box-header">
-                            <div class="bnumber" onClick={()=>{setSection(3)}}>
+                            <div class="bnumber">
                                 <span class="booktitle">
                                         USERS
                                 </span>
