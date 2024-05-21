@@ -11,7 +11,7 @@ use ,
 
 *Note : Add your firebase API key to firebase.js inside config folder*
 
-Create a firebase authentication using email  
+Create a firebase authentication using email in your firebase console.
 
 Create a `LibraryUsers` collection with each document having fields,
 
